@@ -1,0 +1,24 @@
+{
+  "ID": "MadSkunky.GrenadeThrowRangeFix",
+  "AssemblyName": "GrenadeThrowRangeFix.dll",
+  "Author": [
+    {
+      "Key": "English",
+      "Value": "MadSkunky"
+    }
+  ],
+  "Version": "1.0",
+  "Name": [
+    {
+      "Key": "English",
+      "Value": "Grenade Throw Range Fix"
+    }
+  ],
+  "Description": [
+    {
+      "Key": "English",
+      "Value": "Fixes the throwing range calculation for grenades, taking the defined range of each grenade into account.\n\nAdds a 'Throw Range Multiplier' as a configurable variable to adjust the throwing ranges of all grenades (see MOD SETTINGS)."
+    }
+  ],
+  "Dependencies": []
+}
