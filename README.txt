@@ -1,7 +1,7 @@
 # GrenadeThrowRangeFix
 This mod fixes the calculation of the throw range of grenades.
-This is a migration to the Steam Workshop of my original mod created for Modnix:
-https://github.com/MadSkunky/PP-Mods-GrenadeThrowRangeFix
+This is a migration to the Steam Workshop of my [original mod](https://github.com/MadSkunky/PP-Mods-GrenadeThrowRangeFix) created for Modnix.
+
 
 ## Description
 The original method to calculate the throwing range doesn't take the defined ranges for hand thrown grenades into account.
