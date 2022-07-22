@@ -29,7 +29,7 @@ This mod is mainly a helper for other modders that want to tweak the throwing ra
 The vanilla ranges are 16 for the PX Odin and Heal grenade and 12 for almost any other grenade, so be aware that the Odin and Heal grenade get a significant buff with this mod from 12 up to 16 tiles range with 20 strength.
 
 ## Installation and Configuration
-- Subscribe on the Workshop page on Steam: https://steamcommunity.com/sharedfiles/filedetails/?id=2838727380
+- Subscribe on the Steam Workshops mod page: https://steamcommunity.com/sharedfiles/filedetails/?id=2838727380
 - Configuration can be found ingame under "MODS" -> "MOD SETTINGS"
 
 ## Thanks
