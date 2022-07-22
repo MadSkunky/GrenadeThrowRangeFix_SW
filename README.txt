@@ -1,4 +1,4 @@
-﻿# GrenadeThrowRangeFix
+# GrenadeThrowRangeFix
 This mod fixes the calculation of the throw range of grenades.
 This is a migration to the Steam Workshop of my original mod created for Modnix: https://github.com/MadSkunky/PP-Mods-GrenadeThrowRangeFix
 
