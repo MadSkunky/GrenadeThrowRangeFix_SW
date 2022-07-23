@@ -50,10 +50,8 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="GrenadeThrowRangeFixGeoscape.cs" />
     <Compile Include="GrenadeThrowRangeFixConfig.cs" />
     <Compile Include="GrenadeThrowRangeFixMain.cs" />
-    <Compile Include="GrenadeThrowRangeFixTactical.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

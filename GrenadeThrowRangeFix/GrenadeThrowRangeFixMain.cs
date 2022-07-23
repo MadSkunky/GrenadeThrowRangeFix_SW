@@ -16,7 +16,7 @@ namespace GrenadeThrowRangeFix
         public new GrenadeThrowRangeFixConfig Config => (GrenadeThrowRangeFixConfig)base.Config;
 
         /// This property indicates if mod can be Safely Disabled from the game.
-        /// Safely sisabled mods can be reenabled again. Unsafely disabled mods will need game restart ot take effect.
+        /// Safely disabled mods can be reenabled again. Unsafely disabled mods will need game restart ot take effect.
         /// Unsafely disabled mods usually cannot revert thier changes in OnModDisabled
         public override bool CanSafelyDisable => true;
 
@@ -25,7 +25,7 @@ namespace GrenadeThrowRangeFix
         public new Harmony HarmonyInstance => (Harmony)base.HarmonyInstance;
 
         /// <summary>
-        /// Callback for when mod is enabled. Called even on game starup.
+        /// Callback for when mod is enabled. Called even on game startup.
         /// </summary>
         public override void OnModEnabled()
         {
@@ -46,69 +46,29 @@ namespace GrenadeThrowRangeFix
         }
 
         /// <summary>
-        /// Callback for when any property from mod's config is changed.
+        /// Harmony patch that fixes the vanilla throw range calculation.
+        /// The attenuation tag allows Harmony to find the targeted class/object method and apply the patch from the following class.
         /// </summary>
-        public override void OnConfigChanged()
-        {
-            /// Config is accessible at any time.
-        }
-
-
-        /// <summary>
-        /// In Phoenix Point there can be only one active level at a time. 
-        /// Levels go through different states (loading, unloaded, start, etc.).
-        /// General puprose level state change callback.
-        /// </summary>
-        /// <param name="level">Level being changed.</param>
-        /// <param name="prevState">Old state of the level.</param>
-        /// <param name="state">New state of the level.</param>
-        public override void OnLevelStateChanged(Level level, Level.State prevState, Level.State state)
-        {
-            /// Alternative way to access current level at any time.
-            //Level l = GetLevel();
-        }
-
-        /// <summary>
-        /// Useful callback for when level is loaded, ready, and starts.
-        /// Usually game setup is executed.
-        /// </summary>
-        /// <param name="level">Level that starts.</param>
-        public override void OnLevelStart(Level level)
-        {
-        }
-
-        /// <summary>
-        /// Useful callback for when level is ending, before unloading.
-        /// Usually game cleanup is executed.
-        /// </summary>
-        /// <param name="level">Level that ends.</param>
-        public override void OnLevelEnd(Level level)
-        {
-        }
-
-        // This "tag" allows Harmony to find this class and apply it as a patch.
         [HarmonyPatch(typeof(Weapon), "GetThrowingRange")]
-        // Class can be any name, but must be static.
-        internal static class GetThrowingRange_fix
+        /// Class can be any name, but must be static.
+        internal static class Weapon_GetThrowingRange_Patch
         {
-            // Overwrite original fuction to calculate throwing range for grenades.
-            [System.Diagnostics.CodeAnalysis.SuppressMessage("CodeQuality", "IDE0051")]
-            private static bool Prefix(ref float __result, Weapon __instance, float rangeMultiplier)
+            /// Using Postfix patch to be guaranteed to get executed.
+            public static void Postfix(ref float __result, Weapon __instance, float rangeMultiplier)
             {
                 try
                 {
                     float num = __instance.TacticalActor.CharacterStats.Endurance * __instance.TacticalActor.TacticalActorDef.EnduranceToThrowMultiplier;
                     float num2 = __instance.TacticalActor.CharacterStats.BonusAttackRange.CalcModValueBasedOn(num);
-                    // MadSkunky: adding range multiplier and divisor
+                    // MadSkunky: Extension of calculation with range multiplier divided by 12 for normalization and multiplier from configuration.
                     num *= __instance.GetDamagePayload().Range / 12f;
-                    float multiplierPerc = (Main.Config as GrenadeThrowRangeFixConfig).ThrowRangeMultiplier / 100f;
-                    __result = ((num / __instance.Weight * rangeMultiplier) + num2) * multiplierPerc;
-                    // End of changes, the rest is vanilla code
-                    return false;
+                    float multiplier = (Main.Config as GrenadeThrowRangeFixConfig).ThrowRangeMultiplier / 100f;
+                    __result = ((num / __instance.Weight * rangeMultiplier) + num2) * multiplier;
+                    // End of changes
                 }
-                catch (Exception)
+                catch (Exception e)
                 {
-                    return true;
+                    Main.Logger.LogError("GrenadeThrowRangeFix mod ERROR:\n", e);
                 }
             }
         }
